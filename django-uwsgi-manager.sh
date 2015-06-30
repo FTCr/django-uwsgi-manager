@@ -8,8 +8,7 @@ UWSGI_MODULE=$6
 
 stop()
 {
-	killall -9 uwsgi
-
+	kill -INT $(cat "$CFG_FOLDER/uwsgi.pid")
 	kill $(cat "$CFG_FOLDER/celeryd.pid")
 }
 
@@ -60,3 +59,4 @@ case $1 in
 		exit
 	;;
 esac
+
