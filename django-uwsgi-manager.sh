@@ -18,8 +18,8 @@ start()
 	source "bin/activate"
 
 	cd "$DJANGO_PROJECT_FOLDER"
-	./manage.py collectstatic --noinput --settings="$DJANGO_SETTIGNS"
-	./manage.py migrate --noinput --settings="$DJANGO_SETTIGNS"
+	./manage.py collectstatic --noinput --settings="$DJANGO_SETTINGS"
+	./manage.py migrate --noinput --settings="$DJANGO_SETTINGS"
 
 	touch "$CFG_FOLDER/reload"
 	uwsgi -M -H "$VIRTUALENV_FOLDER" --chdir "$DJANGO_PROJECT_FOLDER" \
