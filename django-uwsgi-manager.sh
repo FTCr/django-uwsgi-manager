@@ -26,8 +26,7 @@ start()
 		--pidfile "$CFG_FOLDER/uwsgi.pid" -s "$CFG_FOLDER/socket" -d "$CFG_FOLDER/uwsgi.log" \
 		--touch-reload "$CFG_FOLDER/uwsgi.reload" --env "DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS" -w "$UWSGI_MODULE" \
 		-i "$CFG_FOLDER/uwsgi.ini"
-
-	./manage.py celeryd_detach -B --pidfile "$CFG_FOLDER/celeryd.pid" --logfile "$CFG_FOLDER/celeryd.log" --settings="$DJANGO_SETTIGNS"
+	./manage.py celeryd_detach -B --pidfile "$CFG_FOLDER/celeryd.pid" --logfile "$CFG_FOLDER/celeryd.log" --settings="$DJANGO_SETTINGS"
 }
 
 restart()
