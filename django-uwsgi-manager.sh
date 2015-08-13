@@ -27,6 +27,7 @@ start()
 		--touch-reload "$CFG_FOLDER/uwsgi.reload" --env "DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS" -w "$UWSGI_MODULE" \
 		-i "$CFG_FOLDER/uwsgi.ini"
 	./manage.py celeryd_detach -B --pidfile "$CFG_FOLDER/celeryd.pid" --logfile "$CFG_FOLDER/celeryd.log" --settings="$DJANGO_SETTINGS"
+	post_office
 }
 
 restart()
@@ -38,6 +39,15 @@ restart()
 watch()
 {
 	fswatch -r "$DJANGO_PROJECT_FOLDER" -o | xargs -n1 -I {} touch "$CFG_FOLDER/uwsgi.reload"
+}
+
+post_office()
+{
+	cd "$VIRTUALENV_FOLDER"
+	source "bin/activate"
+
+	cd "$DJANGO_PROJECT_FOLDER"
+	./manage.py send_queued_mail --settings="$DJANGO_SETTINGS"
 }
 
 
@@ -53,6 +63,9 @@ case $1 in
 	;;
 	watch)
 		watch
+	;;
+	email)
+		post_office
 	;;
 	*)
 		exit
