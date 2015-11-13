@@ -36,11 +36,6 @@ restart()
 	start
 }
 
-watch()
-{
-	fswatch -r "$DJANGO_PROJECT_FOLDER" -o | xargs -n1 -I {} touch "$CFG_FOLDER/uwsgi.reload"
-}
-
 post_office()
 {
 	cd "$VIRTUALENV_FOLDER"
@@ -61,9 +56,6 @@ case $1 in
 	restart)
 		restart
 	;;
-	watch)
-		watch
-	;;
 	email)
 		post_office
 	;;
@@ -71,4 +63,3 @@ case $1 in
 		exit
 	;;
 esac
-
